@@ -1,12 +1,12 @@
 package com.example.montapalavras.extras
 
+import android.util.Log
 import java.text.Normalizer
 import java.util.*
 
 class TrieTree {
     data class Node(
         var completeWord: String? = null,
-        var numberOfSelections: Int = 0,
         var weight: Int? = null,
         val letters: MutableMap<Char, Node> = mutableMapOf()
     )
@@ -85,6 +85,34 @@ class TrieTree {
         "Zombaria",
         "Dor"
     )
+    private val weights: MutableMap<Char, Int> =
+        mutableMapOf(
+            Pair('a', 1),
+            Pair('e', 1),
+            Pair('i', 1),
+            Pair('o', 1),
+            Pair('u', 1),
+            Pair('n', 1),
+            Pair('r', 1),
+            Pair('t', 1),
+            Pair('l', 1),
+            Pair('s', 1),
+            Pair('w', 2),
+            Pair('d', 2),
+            Pair('g', 2),
+            Pair('b', 3),
+            Pair('c', 3),
+            Pair('m', 3),
+            Pair('p', 3),
+            Pair('f', 4),
+            Pair('h', 4),
+            Pair('v', 4),
+            Pair('j', 8),
+            Pair('x', 8),
+            Pair('q', 10),
+            Pair('z', 10),
+        )
+    private val alreadySelected = mutableListOf<String>()
 
     init {
         words.forEach { word ->
@@ -98,18 +126,17 @@ class TrieTree {
         return REGEX_UNACCENT.replace(temp, "")
     }
 
-    fun getRoot(): Node {
-        return root
-    }
-
     private fun insert(word: String) {
         var currentNode = root
+        var weight = 0
         word.toLowerCase(Locale.getDefault()).unaccent().forEach { letter ->
             if (currentNode.letters[letter] == null)
                 currentNode.letters[letter] = Node()
+            weight += getWeight(letter)!!
             currentNode = currentNode.letters[letter]!!
         }
-        currentNode.completeWord = word
+        currentNode.completeWord = word.toUpperCase(Locale.getDefault())
+        currentNode.weight = weight
     }
 
     fun search(word: String): Node? {
@@ -119,8 +146,17 @@ class TrieTree {
                 return null
             currentNode = currentNode.letters[letter]!!
         }
-        if(currentNode.completeWord != null)
-            currentNode.numberOfSelections++
+        if (currentNode.completeWord != null)
+            return if (!alreadySelected.contains(currentNode.completeWord)) {
+                alreadySelected.add(currentNode.completeWord!!)
+                currentNode
+            } else null
         return currentNode
+    }
+
+    private fun getWeight(letter: Char) = weights[letter]
+
+    fun clearSelectedWord() {
+        alreadySelected.clear()
     }
 }

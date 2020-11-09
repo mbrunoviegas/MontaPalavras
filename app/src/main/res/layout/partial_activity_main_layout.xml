@@ -2,9 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/plMain"
+    android:id="@+id/rlMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:visibility="gone"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/txtWordScore"
@@ -12,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        tools:text='Palavra de 8 pontos' />
+        android:text='Palavra de 8 pontos' />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWord"
@@ -38,7 +41,7 @@
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        tools:text='Sobraram:' />
+        android:text='Sobraram:' />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestLetters"

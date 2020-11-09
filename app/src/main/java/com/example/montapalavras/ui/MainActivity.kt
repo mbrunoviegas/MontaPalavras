@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.montapalavras.R
+import androidx.lifecycle.Observer
 import com.example.montapalavras.databinding.ActivityMainBinding
-import com.example.montapalavras.extras.TrieTree
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
@@ -18,7 +17,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupObservers()
         setupActivity()
+    }
+
+    private fun setupObservers() {
+        viewModel.mostValuableWord.observe(this, Observer { word ->
+            with(binding) {
+                plMain.rvWord.run {
+                    if (adapter == null) {
+//                        layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+                        adapter = LettersAdapter().apply { updateData(word) }
+                        visibility = View.VISIBLE
+                    } else
+                        (adapter as LettersAdapter).updateData(word)
+                }
+                txtInstruction.visibility = View.GONE
+                plMain.rlMain.visibility = View.VISIBLE
+            }
+        })
+
+        viewModel.restOfMostValuableWord.observe(this, Observer { word ->
+            with(binding) {
+                plMain.rvRestLetters.run {
+                    if (adapter == null) {
+                        adapter = LettersAdapter().apply { updateData(word) }
+                        visibility = View.VISIBLE
+                    } else
+                        (adapter as LettersAdapter).updateData(word)
+                }
+                txtInstruction.visibility = View.GONE
+            }
+        })
     }
 
     private fun setupActivity() {
