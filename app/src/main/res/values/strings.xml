@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MontaPalavras</string>
+    <string name="ok">OK</string>
+    <string name="instructions">Digite as letras disponíveis nessa jogada</string>
+</resources>

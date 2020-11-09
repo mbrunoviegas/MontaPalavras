@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/plMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtWordScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        tools:text='Palavra de 8 pontos' />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtWordScore"
+        android:orientation="horizontal"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_letter" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2.5dp"
+        android:layout_below="@+id/rvWord"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/txtRestLetters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        tools:text='Sobraram:' />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRestLetters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtRestLetters"
+        android:orientation="horizontal"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_letter" />
+
+</RelativeLayout>
