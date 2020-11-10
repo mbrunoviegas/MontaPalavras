@@ -8,6 +8,47 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.montapalavras.R
 import com.example.montapalavras.databinding.ActivityMainBinding
 
+/**
+ * A lógica do programa se baseia em receber um sequência de carácteres
+ * e utilizando essa sequência, percorrer uma árvore Trie utilizando
+ * uma recursividade indireta para encontrar todas as palavras possíveis
+ * de serem formadas com esta sequência. Durante a execução, eu sempre
+ * removo o caráctere que está sendo testado para compor a nova sequência,
+ * da palavra origial, para evitar que ele seja repetido.
+ * @see MainActivityViewModel.getWord
+ *
+ * Após encontrar todas as palavras possíveis, o programa irá verificar
+ * qual palavra tem o maior peso. Caso ocorra empate ele dará como
+ * selecionada a menor palavra.
+ * @see MainActivityViewModel.getMostValuabletNode
+ * @see MainActivityViewModel.getSmaller
+ *
+ * Eu todos os métodos citados acima, eu optei por trabalhar diretamente
+ * com o nó da árvore. Uma vez que ele já contém as palavras completas
+ * e o peso de cada palavra. Então eu simplesmente retorno um nó,
+ * e com base no peso e no tamanho da palavra que está nesse nó,
+ * eu concluo qual é o "nó mais valioso".
+ *
+ * A contagem dos pontos de cada palavra, é feita na hora que eu instancio
+ * minha viewModel. Uma vez instanciada, minha viewModel instancia uma árvore
+ * Trie, que em seu bloco 'init', irá inserir todas as palavras do meu
+ * banco de palavras na árvore trie. Nesse momento, para cada caráctere
+ * de cada palavra, ele verificará seu peso e somar em uma variável. Ao
+ * final da inserção de cada palavra, o *nó folha* receberá tanto o peso
+ * quanto a palavra completa.
+ * @see MainActivityViewModel.trie
+ *
+ * Utilizei 2 recylclerView para fazer a apresentação de cada
+ * caráctere, tanto da palavra formada quanto das letras restante.
+ * Eu usei o GridLayoutManager para limitir o número de carácteres
+ * que eu gostaria de mostrar em cada linha. Utilizei um máximo de 7
+ * para cada RecyclerView. Além disso optei por usar LiveData e
+ * a ViewModel para separar as responsabilidade de lógica do dos dados da view.
+ *
+ * @author Marcelo Bruno Viegas
+ *
+ */
+
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainActivityViewModel by lazy {
