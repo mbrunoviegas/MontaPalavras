@@ -1,5 +1,6 @@
 package com.example.montapalavras.ui
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,11 @@ class LettersAdapter :
         private val binding = ItemLetterBinding.bind(itemView)
 
         fun bind(letter: Char) {
-            binding.txtLetter.text = letter.toString()
+            with(binding) {
+                txtLetter.typeface =
+                    Typeface.createFromAsset(itemView.context.assets, "font/Roboto-Medium.ttf")
+                txtLetter.text = letter.toString()
+            }
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.example.montapalavras.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.montapalavras.R
 import com.example.montapalavras.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -22,31 +23,52 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setupObservers() {
-        viewModel.mostValuableWord.observe(this, Observer { word ->
+        viewModel.mostValuableNode.observe(this, { mostValuableNode ->
             with(binding) {
-                plMain.rvWord.run {
-                    if (adapter == null) {
-//                        layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = LettersAdapter().apply { updateData(word) }
-                        visibility = View.VISIBLE
-                    } else
-                        (adapter as LettersAdapter).updateData(word)
+                partionMain.run {
+                    with(rvWord) {
+                        if (adapter == null) {
+                            layoutManager = GridLayoutManager(this@MainActivity, 7)
+                            adapter =
+                                LettersAdapter().apply { updateData(mostValuableNode.completeWord!!) }
+                            visibility = View.VISIBLE
+                        } else
+                            (adapter as LettersAdapter).updateData(mostValuableNode.completeWord!!)
+                    }
+                    val textScore = "Palavra de ${mostValuableNode.weight.toString()} pontos"
+                    txtWordScore.text = textScore
                 }
+
                 txtInstruction.visibility = View.GONE
-                plMain.rlMain.visibility = View.VISIBLE
+                partionMain.rlPartion.visibility = View.VISIBLE
+                btnOk.isEnabled = true
             }
         })
 
-        viewModel.restOfMostValuableWord.observe(this, Observer { word ->
+        viewModel.restOfMostValuableWord.observe(this, { word ->
             with(binding) {
-                plMain.rvRestLetters.run {
-                    if (adapter == null) {
-                        adapter = LettersAdapter().apply { updateData(word) }
-                        visibility = View.VISIBLE
-                    } else
-                        (adapter as LettersAdapter).updateData(word)
+                partionMain.run {
+                    with(rvRestLetters) {
+                        if (adapter == null) {
+                            layoutManager = GridLayoutManager(this@MainActivity, 7)
+                            adapter =
+                                LettersAdapter().apply { updateData(word) }
+                            visibility = View.VISIBLE
+                        } else
+                            (adapter as LettersAdapter).updateData(word)
+                    }
                 }
-                txtInstruction.visibility = View.GONE
+            }
+        })
+
+        viewModel.resetLayout.observe(this, { reset ->
+            with(binding) {
+                if (reset) {
+                    partionMain.rlPartion.visibility = View.GONE
+                    txtInstruction.text = getString(R.string.tente_novamente)
+                    txtInstruction.visibility = View.VISIBLE
+                }
+                btnOk.isEnabled = true
             }
         })
     }
@@ -54,6 +76,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun setupActivity() {
         with(binding) {
             btnOk.setOnClickListener(this@MainActivity)
+            txtInstruction.typeface = Typeface.createFromAsset(assets, "font/Roboto-Regular.ttf")
         }
     }
 
@@ -61,15 +84,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         with(binding) {
             when (v) {
                 btnOk -> {
-                    var letters = ""
+                    val letters: String
                     if (edtLetters.text.toString().isNotEmpty()) {
+                        binding.btnOk.isEnabled = false
                         letters = edtLetters.text.toString()
                         viewModel.getWord(letters)
-                        Log.i("PALAVRA", letters)
                     }
-                }
-                else -> {
-
                 }
             }
         }

@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">MontaPalavras</string>
+    <string name="app_name">Monta Palavras</string>
+
+    <!--  MainActivity Strings   -->
     <string name="ok">OK</string>
-    <string name="instructions">Digite as letras disponíveis nessa jogada</string>
+    <string name="instructions">Digite as letras disponíveis nesta jogada</string>
+    <string name="sobraram">Sobraram:</string>
+    <string name="tente_novamente">Impossível montar uma palavra existente com essa sequência. Digite novamente.</string>
+    <string name="base_sentence_word_score">Palavra de 8 pontos</string>
+
 </resources>

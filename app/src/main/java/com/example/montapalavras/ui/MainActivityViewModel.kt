@@ -6,8 +6,9 @@ import com.example.montapalavras.extras.TrieTree
 import java.util.*
 
 class MainActivityViewModel : ViewModel() {
-    val mostValuableWord = MutableLiveData<String>()
+    val mostValuableNode = MutableLiveData<TrieTree.Node>()
     val restOfMostValuableWord = MutableLiveData<String>()
+    val resetLayout = MutableLiveData<Boolean>()
     private val nodes = mutableListOf<TrieTree.Node>()
     private val restSting = mutableMapOf<String, String>()
     private val trie = TrieTree()
@@ -18,11 +19,13 @@ class MainActivityViewModel : ViewModel() {
         }
 
         if (nodes.isNotEmpty()) {
-            mostValuableWord.value = getMostValuabletWord()
-            restOfMostValuableWord.value = restSting[mostValuableWord.value]
+            mostValuableNode.value = getMostValuabletNode()
+            restOfMostValuableWord.value = restSting[mostValuableNode.value!!.completeWord]
             nodes.clear()
             restSting.clear()
             trie.clearSelectedWord()
+        } else {
+            resetLayout.value = true
         }
     }
 
@@ -42,15 +45,15 @@ class MainActivityViewModel : ViewModel() {
         }
     }
 
-    private fun getMostValuabletWord(): String {
-        var mostValuest = nodes[0]
+    private fun getMostValuabletNode(): TrieTree.Node {
+        var mostValuableNode = nodes[0]
         for (i in 1 until nodes.size)
-            if (mostValuest.weight!! <= nodes[i].weight!!)
-                mostValuest = if (mostValuest.weight == nodes[i].weight!!)
-                    getSmaller(mostValuest, nodes[i])
+            if (mostValuableNode.weight!! <= nodes[i].weight!!)
+                mostValuableNode = if (mostValuableNode.weight == nodes[i].weight!!)
+                    getSmaller(mostValuableNode, nodes[i])
                 else
                     nodes[i]
-        return mostValuest.completeWord!!
+        return mostValuableNode
     }
 
     private fun getSmaller(node1: TrieTree.Node, node2: TrieTree.Node) =

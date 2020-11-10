@@ -1,6 +1,5 @@
 package com.example.montapalavras.extras
 
-import android.util.Log
 import java.text.Normalizer
 import java.util.*
 
@@ -120,10 +119,10 @@ class TrieTree {
         }
     }
 
-    fun CharSequence.unaccent(): String {
-        val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+    private fun CharSequence.unaccent(): String {
+        val regexUnnaccent = "\\p{InCombiningDiacriticalMarks}+".toRegex()
         val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-        return REGEX_UNACCENT.replace(temp, "")
+        return regexUnnaccent.replace(temp, "")
     }
 
     private fun insert(word: String) {

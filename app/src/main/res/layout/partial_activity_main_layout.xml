@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlMain"
+    android:id="@+id/rlPartion"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginHorizontal="10dp"
     android:visibility="gone"
     tools:visibility="visible">
@@ -13,26 +12,23 @@
         android:id="@+id/txtWordScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/rvWord"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text='Palavra de 8 pontos' />
+        tools:text="@string/base_sentence_word_score" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtWordScore"
-        android:orientation="horizontal"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/item_letter" />
+        android:layout_above="@id/divider"
+        tools:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_letter"
+        tools:orientation="horizontal" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2.5dp"
-        android:layout_below="@+id/rvWord"
-        android:layout_margin="8dp"
-        android:background="@color/colorPrimary" />
+        style="@style/MyDividerStyle" />
 
     <TextView
         android:id="@+id/txtRestLetters"
@@ -41,15 +37,15 @@
         android:layout_below="@id/divider"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
-        android:text='Sobraram:' />
+        android:text="@string/sobraram" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRestLetters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtRestLetters"
-        android:orientation="horizontal"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/item_letter" />
+        tools:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_letter"
+        tools:orientation="horizontal" />
 
 </RelativeLayout>
