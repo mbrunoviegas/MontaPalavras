@@ -9,12 +9,14 @@ import com.example.montapalavras.R
 import com.example.montapalavras.databinding.ActivityMainBinding
 
 /**
- * A lógica do programa se baseia em receber um sequência de carácteres
+ * A lógica do programa se baseia em receber uma sequência de carácteres
  * e utilizando essa sequência, percorrer uma árvore Trie utilizando
  * uma recursividade indireta para encontrar todas as palavras possíveis
- * de serem formadas com esta sequência. Durante a execução, eu sempre
- * removo o caráctere que está sendo testado para compor a nova sequência,
- * da palavra origial, para evitar que ele seja repetido.
+ * de serem formadas. Durante a execução, eu sempre removo da palavra origial,
+ * o caráctere que está sendo testado para compor a nova sequência, para evitar
+ * que ele seja repetido. Sempre que achar uma nova palavra, eu adiciono
+ * o nó dessa palavra em uma lista de nós e o resto da sequência em uma lista
+ * que contem o resto das sequências.
  * @see MainActivityViewModel.getWord
  *
  * Após encontrar todas as palavras possíveis, o programa irá verificar
@@ -27,7 +29,9 @@ import com.example.montapalavras.databinding.ActivityMainBinding
  * com o nó da árvore. Uma vez que ele já contém as palavras completas
  * e o peso de cada palavra. Então eu simplesmente retorno um nó,
  * e com base no peso e no tamanho da palavra que está nesse nó,
- * eu concluo qual é o "nó mais valioso".
+ * eu concluo qual é o "nó mais valioso". Caso a sequência informada
+ * não seja suficiente para encontrar nenhuma palavra no banco de palavras,
+ * eu peço ao usuário para digitar novamente.
  *
  * A contagem dos pontos de cada palavra, é feita na hora que eu instancio
  * minha viewModel. Uma vez instanciada, minha viewModel instancia uma árvore
