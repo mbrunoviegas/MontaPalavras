@@ -5,5 +5,5 @@ The main objective of this process, was get existent words from a input string. 
 
 For this, I used the Trie Tree data structre and an indirect recursive function to walkthrough it and get all words.
 
-The interface is pretty simple, you must provide a input string and click on the button to generate the most value word and check the remanining letters.
+The interface is pretty simple, you must provide an input string and click on the button to generate the most value word and check the remanining letters.
 
