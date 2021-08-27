@@ -1,7 +1,7 @@
 # Monta Palavras
 This is a project to applcation process in Letras.
 
-The main objective of this process, was get existent words from a input string. Then, comparing each one and check which one has the most value.
+The main objective of this process, was getting existent words from an input string. Then, comparing each one and check which one has the most value.
 
 For this, I used the Trie Tree data structre and an indirect recursive function to walkthrough it and get all words.
 
